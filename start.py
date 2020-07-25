@@ -32,7 +32,7 @@ def get_profile_dir():
 
 
 def get_tws_version():
-    paths = glob.glob(os.path.expanduser('~/Jts/???'))
+    paths = glob.glob(os.path.expanduser('~/Jts/ibgateway/???'))
     version = os.path.basename(paths[0])
     print('Found TWS version:', version)
     return version
@@ -229,10 +229,11 @@ def start_vnc_server():
 
 
 def update_jvm_options():
-    path = '/home/tws/Jts/%s/tws.vmoptions' % (get_tws_version(),)
+    path = '/home/tws/Jts/ibgateway/%s/ibgateway.vmoptions' % (get_tws_version(),)
 
     with open(path, 'r+') as fp:
         lines = fp.readlines()
+        print(lines)
         for i, line in enumerate(lines):
             if line.startswith('-Xmx'):
                 lines[i] = '-Xmx%s\n' % (os.environ.get('JVM_HEAP_SIZE', '4096m'),)
@@ -253,6 +254,7 @@ def start_tws():
     wm = subprocess.Popen(['openbox'])
     os.execl('/opt/ibc/scripts/ibcstart.sh',
              '/opt/ibc/scripts/ibcstart.sh',
+             '-g',
              get_tws_version())
 
 

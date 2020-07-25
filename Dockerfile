@@ -38,7 +38,7 @@ RUN \
 
 USER tws
 RUN \
-    wget -O /tmp/tws.sh https://download2.interactivebrokers.com/installers/tws/stable-standalone/tws-stable-standalone-linux-x64.sh && \
+    wget -O /tmp/tws.sh https://download2.interactivebrokers.com/installers/ibgateway/stable-standalone/ibgateway-stable-standalone-linux-x64.sh && \
         mkdir -p /home/tws/.vnc && \
         echo x | vncpasswd -f > /home/tws/.vnc/passwd && \
         chmod -R go= /home/tws/.vnc && \
@@ -58,5 +58,5 @@ RUN \
     rm /tmp/ibc.zip
 
 COPY . /opt/docker-tws
-EXPOSE 5900 7496 7497 7462
+EXPOSE 5900 7496 7497 7462 4001 4002
 CMD ["/opt/docker-tws/start.py"]
