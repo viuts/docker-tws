@@ -236,7 +236,13 @@ def update_jvm_options():
         print(lines)
         for i, line in enumerate(lines):
             if line.startswith('-Xmx'):
-                lines[i] = '-Xmx%s\n' % (os.environ.get('JVM_HEAP_SIZE', '4096m'),)
+                continue # skip if
+                # lines[i] = '-Xmx%s\n' % (os.environ.get('JVM_HEAP_SIZE', '4096m'),)
+
+        lines.append('-XX:+UnlockExperimentalVMOptions\n')
+        lines.append('-XX:+UseCGroupMemoryLimitForHeap\n')
+        lines.append('-XX:InitialRAMFraction=4\n')
+        lines.append('-XX:MaxRAMFraction=2\n')
 
         fp.seek(0)
         fp.truncate(0)
